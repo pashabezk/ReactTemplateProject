@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {fetchLogIn} from "../API/AuthAPI";
+import {fetchLogIn, fetchLogOut} from "../API/AuthAPI";
 
 const initialState = {
 	userId: null,
@@ -8,19 +8,18 @@ const initialState = {
 	error: null
 };
 
-// export const incrementAsync = createAsyncThunk(
-// 	'alfaBank/fetchCount',
-// 	async (amount: number) => {
-// 		const response = await fetchCount(amount);
-// 		// The value we return becomes the `fulfilled` action payload
-// 		return response.data;
-// 	}
-// );
-
 export const tryLogInAsync = createAsyncThunk(
 	'auth/tryLogIn',
 	async ({login, password}) => {
 		const response = await fetchLogIn(login, password);
+		return response.data;
+	}
+);
+
+export const tryLogOutAsync = createAsyncThunk(
+	'auth/tryLogOut',
+	async () => {
+		const response = await fetchLogOut();
 		return response.data;
 	}
 );
@@ -32,9 +31,6 @@ export const authSlice = createSlice({
 		setAuthError: (state, action) => {
 			state.error = action.payload;
 		}
-		// decrement: (state) => {
-		// 	state.value -= 1;
-		// },
 		// incrementByAmount: (state, action) => {
 		// 	state.value += action.payload;
 		// }
@@ -46,18 +42,31 @@ export const authSlice = createSlice({
 			})
 			.addCase(tryLogInAsync.fulfilled, (state, action) => {
 				state.isAuthing = false;
-				if(action.payload.error === 0) {
+				if (action.payload.error === 0) {
 					state.userId = action.payload.id;
 					state.login = action.payload.login;
 					state.error = null;
-				}
-				else {
+				} else {
 					state.error = action.payload.errorMsg;
 				}
 			})
 			.addCase(tryLogInAsync.rejected, (state) => {
 				state.isAuthing = false;
 				state.error = "Что-то пошло не так";
+			})
+			.addCase(tryLogOutAsync.pending, (state) => {
+				state.isAuthing = true;
+			})
+			.addCase(tryLogOutAsync.fulfilled, (state, action) => {
+				state.isAuthing = false;
+				if (action.payload.error === 0) {
+					state.userId = null;
+					state.login = null;
+					state.error = null;
+				}
+			})
+			.addCase(tryLogOutAsync.rejected, (state) => {
+				state.isAuthing = false;
 			});
 	},
 });

@@ -26,7 +26,7 @@ const PageWithDefaultMenuSidebar = ({children, ...props}) => {
 	const location = useLocation().pathname.split('/')[1];
 
 	const onMenuSelect = (props) => {
-		navigate("/" + props.key)
+		navigate("/" + props.key);
 	}
 
 	return (

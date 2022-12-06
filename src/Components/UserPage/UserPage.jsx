@@ -1,5 +1,6 @@
 import React from "react";
 import PageWithDefaultMenuSidebar from "../PageWithSideMenu/PageWithStandartMenu";
+import withAuthRedirect from "../HOC/withAuthRedirect";
 
 const Comp = (props) => {
 	return (
@@ -39,4 +40,4 @@ const UserPage = () => {
 	);
 }
 
-export default UserPage;
+export default withAuthRedirect(UserPage);

@@ -1,5 +1,6 @@
 import React from "react";
 import PageWithDefaultMenuSidebar from "../PageWithSideMenu/PageWithStandartMenu";
+import withAuthRedirect from "../HOC/withAuthRedirect";
 
 
 
@@ -11,4 +12,4 @@ const MessagesPage = () => {
 	);
 }
 
-export default MessagesPage;
+export default withAuthRedirect(MessagesPage);

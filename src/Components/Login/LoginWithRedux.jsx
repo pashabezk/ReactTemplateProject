@@ -2,6 +2,7 @@ import React from "react";
 import {Button, Checkbox, Form, Input} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {selectAuthError, selectIsAuthing, setAuthError, tryLogInAsync} from "../../Redux/AuthReducer";
+import withAuthRedirect from "../HOC/withAuthRedirect";
 
 const LoginWithRedux = () => {
 
@@ -98,4 +99,4 @@ const LoginWithRedux = () => {
 	);
 }
 
-export default LoginWithRedux;
+export default withAuthRedirect(LoginWithRedux);
