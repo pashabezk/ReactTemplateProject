@@ -1,7 +1,9 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {fetchLogIn, fetchLogOut} from "../API/AuthAPI";
+import {fetchLogIn, fetchLogOut, fetchWhoAmI} from "../API/AuthAPI";
+import {getTokenFromCookie, putTokenToCookie, removeTokenFromCookie} from "../Cookie/AuthWithCookie";
 
 const initialState = {
+	token: getTokenFromCookie(),
 	userId: null,
 	login: null,
 	isAuthing: false,
@@ -20,6 +22,14 @@ export const tryLogOutAsync = createAsyncThunk(
 	'auth/tryLogOut',
 	async () => {
 		const response = await fetchLogOut();
+		return response.data;
+	}
+);
+
+export const getInfoFromTokenAsync = createAsyncThunk(
+	'auth/getInfoFromToken',
+	async (token) => {
+		const response = await fetchWhoAmI(token);
 		return response.data;
 	}
 );
@@ -45,7 +55,9 @@ export const authSlice = createSlice({
 				if (action.payload.error === 0) {
 					state.userId = action.payload.id;
 					state.login = action.payload.login;
+					state.token = action.payload.token;
 					state.error = null;
+					putTokenToCookie(action.payload.token); // сохранение полученного токена в куки
 				} else {
 					state.error = action.payload.errorMsg;
 				}
@@ -56,6 +68,8 @@ export const authSlice = createSlice({
 			})
 			.addCase(tryLogOutAsync.pending, (state) => {
 				state.isAuthing = true;
+				state.token = undefined;
+				removeTokenFromCookie(); // удаление токена из cookie
 			})
 			.addCase(tryLogOutAsync.fulfilled, (state, action) => {
 				state.isAuthing = false;
@@ -63,6 +77,22 @@ export const authSlice = createSlice({
 					state.userId = null;
 					state.login = null;
 					state.error = null;
+				}
+			})
+			.addCase(getInfoFromTokenAsync.rejected, (state) => {
+				state.isAuthing = false;
+			})
+			.addCase(getInfoFromTokenAsync.pending, (state) => {
+				state.isAuthing = true;
+			})
+			.addCase(getInfoFromTokenAsync.fulfilled, (state, action) => {
+				state.isAuthing = false;
+				if (action.payload.error === 0) {
+					state.userId = action.payload.id;
+					state.login = action.payload.login;
+					state.error = null;
+				} else {
+					state.error = action.payload.errorMsg;
 				}
 			})
 			.addCase(tryLogOutAsync.rejected, (state) => {
@@ -76,6 +106,7 @@ export const {setAuthError} = authSlice.actions;
 
 // selectors
 export const selectLogin = (state) => state.auth.login;
+export const selectToken = (state) => state.auth.token;
 export const selectUserId = (state) => state.auth.userId;
 export const selectIsAuthing = (state) => state.auth.isAuthing;
 export const selectAuthError = (state) => state.auth.error;

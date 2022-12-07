@@ -9,9 +9,11 @@ import store from "./Redux/Store";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<React.StrictMode>
+		{/*<CookiesProvider>*/}
 		<Provider store={store}>
 			<App/>
 		</Provider>
+		{/*</CookiesProvider>*/}
 	</React.StrictMode>
 );
 

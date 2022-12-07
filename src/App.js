@@ -23,9 +23,6 @@ function App() {
 		// >
 		<BrowserRouter>
 			<Layout className="main-wrapper">
-				{/*<Header>*/}
-				{/*	<AppHeader/>*/}
-				{/*</Header>*/}
 				<AppHeader/>
 				<Content>
 					<React.Suspense fallback={<div>loading</div>}>
@@ -49,4 +46,5 @@ function App() {
 	);
 }
 
+// export default withCookieSession(App);
 export default App;
