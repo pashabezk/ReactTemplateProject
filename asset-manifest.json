@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/ReactTemplateProject/static/css/main.2f4be37d.css",
-    "main.js": "/ReactTemplateProject/static/js/main.530a434a.js",
+    "main.js": "/ReactTemplateProject/static/js/main.b2c23295.js",
     "static/js/66.e0f3a82d.chunk.js": "/ReactTemplateProject/static/js/66.e0f3a82d.chunk.js",
     "static/js/787.3cd230ec.chunk.js": "/ReactTemplateProject/static/js/787.3cd230ec.chunk.js",
     "static/media/logo.svg": "/ReactTemplateProject/static/media/logo.717d42befac1d457442147b419af8e57.svg",
     "index.html": "/ReactTemplateProject/index.html",
     "main.2f4be37d.css.map": "/ReactTemplateProject/static/css/main.2f4be37d.css.map",
-    "main.530a434a.js.map": "/ReactTemplateProject/static/js/main.530a434a.js.map",
+    "main.b2c23295.js.map": "/ReactTemplateProject/static/js/main.b2c23295.js.map",
     "66.e0f3a82d.chunk.js.map": "/ReactTemplateProject/static/js/66.e0f3a82d.chunk.js.map",
     "787.3cd230ec.chunk.js.map": "/ReactTemplateProject/static/js/787.3cd230ec.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2f4be37d.css",
-    "static/js/main.530a434a.js"
+    "static/js/main.b2c23295.js"
   ]
 }
