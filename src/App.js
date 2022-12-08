@@ -2,7 +2,7 @@ import './App.css';
 import React from "react";
 import {Layout} from "antd";
 import {Content, Footer} from "antd/es/layout/layout";
-import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import {HashRouter, Navigate, Route, Routes} from "react-router-dom";
 import AppFooter from "./Components/Footer/Footer";
 import MessagesPage from "./Components/MessagesPage/MessagesPage";
 import LoginWithRedux from "./Components/Login/LoginWithRedux";
@@ -21,7 +21,10 @@ function App() {
 		// 		},
 		// 	}}
 		// >
-		<BrowserRouter>
+
+		// HashRouter only for GitHub pages
+		// <BrowserRouter basename={process.env.PUBLIC_URL}> // use instead HashRouter in real project
+		<HashRouter>
 			<Layout className="main-wrapper">
 				<AppHeader/>
 				<Content>
@@ -42,7 +45,7 @@ function App() {
 					</div>
 				</Footer>
 			</Layout>
-		</BrowserRouter>
+		</HashRouter>
 	);
 }
 
